@@ -4,9 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="App.UI.MainWindow"
         Title="Nawigacja Audio - Radar"
+        Background="#1E1E1E"
         Width="800" Height="600">
+        
 
-    <Canvas Name="MainCanvas" Background="#1E1E1E">
+    <Canvas Name="MainCanvas" >
         <!-- źródło dźwięku -->
 
         <!-- gracz -->

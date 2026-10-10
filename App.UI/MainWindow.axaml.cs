@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Data;
 using Avalonia.Media;
 using Avalonia.Controls.Shapes;
+using App.Audio;
 
 
 namespace App.UI;
@@ -16,6 +17,7 @@ public partial class MainWindow : Window
 {
 
     private Map _currentMap;
+    private AudioEngine _audioEngine;
 
     private Player _player;
     private const double Speed = 2.0;//Prędkość chodzenia
@@ -52,6 +54,7 @@ public partial class MainWindow : Window
                 Canvas.SetTop(dot, landmark.Y - 8);
 
                 MainCanvas.Children.Add(dot);
+                _audioEngine.AddLoopingSoundSource(landmark.AudioFile, landmark.X, landmark.Y);
             }
         }
     }
@@ -63,7 +66,11 @@ public partial class MainWindow : Window
         //Ustawienie gracza na środku ekranu
         _player = new Player { Rotation = 0 };
 
+        _audioEngine = new AudioEngine();
+        _audioEngine.Initialize();
+
         LoadMap("poziom1.json");
+        
 
         //Pętla gry (ok. 60 FPS)
         _gameLoop = new DispatcherTimer();
@@ -112,10 +119,37 @@ public partial class MainWindow : Window
             if (_player.Y > _currentMap.Height - 10) _player.Y = _currentMap.Height - 10;
         }
 
+        if (_currentMap != null)
+        {
+            string newTitle = $"X: {Math.Round(_player.X)} | Y: {Math.Round(_player.Y)} |";
+
+            foreach (var landmark in _currentMap.Landmarks)
+            {
+                double deltaX = landmark.X - _player.X;
+                double deltaY = landmark.Y - _player.Y;
+
+                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                double absoluteAngle = Math.Atan2(deltaY, deltaX) * 180.0 / Math.PI;
+
+                double relativeAngle = absoluteAngle - _player.Rotation;
+                relativeAngle = (relativeAngle + 540) % 360 - 180;
+
+                newTitle += $"[{landmark.Name}: {Math.Round(distance)}m, {Math.Round(relativeAngle)}°] ";
+            }
+
+            Title = newTitle;
+        }
+
 
         if (_isWPressed || _isSPressed || _isAPressed || _isDPressed || _isQPressed || _isEPressed)
         {
             UpdatePlayerUI();
+        }
+
+        if (_audioEngine != null)
+        {
+            _audioEngine.UpdateListener(_player.X, _player.Y, _player.Rotation);
         }
     }
      
@@ -164,5 +198,15 @@ public partial class MainWindow : Window
         PlayerDirection.EndPoint = new Avalonia.Point(endX, endY);
 
         Title = $"Nawigacja Audio - X: {Math.Round(_player.X)} | Y: {Math.Round(_player.Y)} | Kąt: {_player.Rotation}°";
+
+        //Pobranie aktualnego wymiaru okna do wyznaczenia jego środka
+        double windowCenterX = Bounds.Width / 2;
+        double windowCenterY = Bounds.Height / 2;
+
+        //Wyśrodkowanie widoku
+        MainCanvas.RenderTransform = new TranslateTransform(
+            windowCenterX - _player.X,
+            windowCenterY - _player.Y
+        );
     }
 }
