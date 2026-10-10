@@ -1,4 +1,7 @@
 @echo off
 echo Trwa kompilacja i uruchamianie aplikacji Nawigacja Audio...
-dotnet run --project App.UI/App.UI.csproj
+dotnet clean
+dotnet build
+cd App.UI\bin\Debug\net10.0
+start App.UI.exe
 pause
