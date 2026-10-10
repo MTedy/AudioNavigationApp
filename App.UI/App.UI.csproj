@@ -21,4 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\App.Core\App.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="poziom1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

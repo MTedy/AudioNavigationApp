@@ -1,0 +1,21 @@
+{
+  "MapName": "Labolatorium Dźwięku",
+  "Width": 1000,
+  "Height": 1000,
+  "PlayerStartX": 500,
+  "PlayerStartY": 500,
+  "Landmarks": [
+    {
+      "Name": "Tykający Zegar",
+      "X": 900,
+      "Y": 500,
+      "AudioFile": "zegar.wav"
+    },
+    {
+      "Name": "Buczący wentylator",
+      "X": 100,
+      "Y": 100,
+      "AudioFile": "wentylator.wav"
+    }
+  ]
+}

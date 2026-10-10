@@ -3,11 +3,19 @@ using Avalonia.Input;
 using App.Core;
 using System;
 using Avalonia.Threading;
+using System.IO;
+using System.Text.Json;
+using System.Data;
+using Avalonia.Media;
+using Avalonia.Controls.Shapes;
+
 
 namespace App.UI;
 
 public partial class MainWindow : Window
 {
+
+    private Map _currentMap;
 
     private Player _player;
     private const double Speed = 2.0;//Prędkość chodzenia
@@ -17,12 +25,45 @@ public partial class MainWindow : Window
     private bool _isWPressed, _isSPressed, _isAPressed, _isDPressed;//poruszanie się WSAD
     private bool _isQPressed, _isEPressed;//Obrót QE
 
+    //Wczytywanie mapy
+    private void LoadMap(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+
+            _currentMap = JsonSerializer.Deserialize<Map>(json);
+
+            _player.X = _currentMap.PlayerStartX;
+            _player.Y = _currentMap.PlayerStartY;
+
+            //Rysowanie punkltów dźwiękowych
+            foreach (var landmark in _currentMap.Landmarks)
+            {
+                Ellipse dot = new Ellipse
+                {
+                    Width = 16,
+                    Height = 16,
+                    Fill = Brushes.LimeGreen
+                };
+
+                //Ustawianie kropki na odpowiednich współrzędnych
+                Canvas.SetLeft(dot, landmark.X - 8);
+                Canvas.SetTop(dot, landmark.Y - 8);
+
+                MainCanvas.Children.Add(dot);
+            }
+        }
+    }
+
     public MainWindow()
     {
         InitializeComponent();
 
         //Ustawienie gracza na środku ekranu
-        _player = new Player { X = 400, Y = 300, Rotation = 0 };
+        _player = new Player { Rotation = 0 };
+
+        LoadMap("poziom1.json");
 
         //Pętla gry (ok. 60 FPS)
         _gameLoop = new DispatcherTimer();
@@ -62,6 +103,15 @@ public partial class MainWindow : Window
             _player.X += Math.Cos(radians + Math.PI / 2) * Speed;
             _player.Y += Math.Sin(radians + Math.PI / 2) * Speed;
         }
+
+        if (_currentMap != null)
+        {
+            if (_player.X < 10) _player.X = 10;
+            if (_player.X > _currentMap.Width - 10) _player.X = _currentMap.Width - 10;
+            if (_player.Y < 10) _player.Y = 10;
+            if (_player.Y > _currentMap.Height - 10) _player.Y = _currentMap.Height - 10;
+        }
+
 
         if (_isWPressed || _isSPressed || _isAPressed || _isDPressed || _isQPressed || _isEPressed)
         {
