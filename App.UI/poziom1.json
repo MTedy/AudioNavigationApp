@@ -1,21 +1,59 @@
 {
-  "MapName": "Labolatorium Dźwięku",
+  "MapName": "Prezentacja: Slalom i Okluzja",
   "Width": 1000,
   "Height": 1000,
-  "PlayerStartX": 500,
+  "PlayerStartX": 200,
   "PlayerStartY": 500,
   "Landmarks": [
     {
-      "Name": "Tykający Zegar",
-      "X": 900,
+      "Name": "Zegar (Cel)",
+      "X": 850,
       "Y": 500,
       "AudioFile": "zegar.wav"
     },
     {
-      "Name": "Buczący wentylator",
-      "X": 100,
-      "Y": 100,
+      "Name": "Wentylator (Tło)",
+      "X": 500,
+      "Y": 200,
       "AudioFile": "wentylator.wav"
+    }
+  ],
+  "Walls": [
+    {
+      "StartX": 100,
+      "StartY": 400,
+      "EndX": 950,
+      "EndY": 400
+    },
+    {
+      "StartX": 100,
+      "StartY": 600,
+      "EndX": 950,
+      "EndY": 600
+    },
+    {
+      "StartX": 100,
+      "StartY": 400,
+      "EndX": 100,
+      "EndY": 600
+    },
+    {
+      "StartX": 950,
+      "StartY": 400,
+      "EndX": 950,
+      "EndY": 600
+    },
+    {
+      "StartX": 450,
+      "StartY": 400,
+      "EndX": 450,
+      "EndY": 530
+    },
+    {
+      "StartX": 700,
+      "StartY": 470,
+      "EndX": 700,
+      "EndY": 600
     }
   ]
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Text;
 
 namespace App.Core
@@ -16,6 +17,10 @@ namespace App.Core
         public double PlayerStartX { get; set; }
         public double PlayerStartY { get; set; }
 
+        //Lista punktów dźwiękowych na mapie
         public List<SoundLandmark> Landmarks { get; set; } = new List<SoundLandmark>();
+
+        //Lista ścian (przeszkody blokujące ruch i tłumiące dźwięk)
+        public List<Wall> Walls { get; set; } = new List<Wall>();
     }
 }
