@@ -8,7 +8,7 @@ Aplikacja inżynierska będąca symulatorem nawigacji przestrzennej w oparciu o 
 * **Detekcja kolizji:** Twarda blokada ruchu przy kontakcie gracza z przeszkodą.
 * **Audio Feedback:** Natychmiastowe sprzężenie zwrotne (one-shot audio) informujące o uderzeniu w ścianę.
 * **Okluzja akustyczna:** Realistyczne tłumienie głośności źródeł dźwięku, gdy gracz i cel oddzieleni są od siebie przeszkodą.
-* **Uproszczona dyfrakcja:** Inteligentny algorytm raycastingu – gdy cel jest zasłonięty, wirtualne źródło dźwięku płynnie przesuwa się na najbliższą wolną krawędź ściany (omijając ślepe zaułki i skrzyżowania typu T), naturalnie naprowadzając gracza na światło przejścia.
+* **Uproszczona dyfrakcja:** Inteligentny algorytm raycastingu – gdy cel jest zasłonięty, wirtualne źródło dźwięku płynnie przesuwa się na najbliższą wolną krawędź ściany (omijając ślepe zaułki), naturalnie naprowadzając gracza na światło przejścia.
 
 ## 🎧 Wymagania
 
